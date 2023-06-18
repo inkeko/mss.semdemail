@@ -21,7 +21,7 @@ public class RegistrationVerificationService<T extends MssUser> {
 
     public String performRegistrationVerification( MssUser user,  Model model) throws MessagingException {
         emailService.sendRegistrationEmail(user.getEmail());
-        emailService.saveRegistrationVerificationCode((Client) user);
+        emailService.saveRegistrationVerificationCode( user);
         model.addAttribute("message", "Regisztráció sikeres!");
         model.addAttribute("first_name", user.getFirstName());
         model.addAttribute("last_name", user.getLastName());

@@ -2,6 +2,7 @@ package hu.ak_akademia.mss.service;
 
 import hu.ak_akademia.mss.model.RegistrationVerificationCode;
 import hu.ak_akademia.mss.model.user.Client;
+import hu.ak_akademia.mss.model.user.MssUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -47,10 +48,10 @@ public class EmailService {
         helper.setText(processedHtmlContent, true);
         emailSender.send(message);
     }
-    public void saveRegistrationVerificationCode(Client client) {
+    public void saveRegistrationVerificationCode(MssUser user) {
         RegistrationVerificationCode verificationCode = new RegistrationVerificationCode();
         verificationCode.setVerificationCode(uniqueCode);
-        verificationCode.setUser(client);
+        verificationCode.setUser(user);
         verificationCode.setExpirydate(LocalDate.now().plusDays(1));
         registrationVerificationCodeService.saveVerificationCode(verificationCode);
     }
