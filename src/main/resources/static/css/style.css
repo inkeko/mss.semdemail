@@ -1,0 +1,35 @@
+body {
+  background: #B2CF91;
+}
+
+.registration-form-frame {
+  margin: 50px;
+}
+
+.header-1-view {
+  text-align: center;
+  margin-bottom: 50px;
+
+}
+
+.frame {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  min-height: 100vh;
+}
+
+.center-screen {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  min-height: 100vh;
+}
+
+.validatorError {
+  color : red;
+}

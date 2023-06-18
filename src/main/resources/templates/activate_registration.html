@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Email tartalma</title>
+</head>
+
+<body>
+<h1>Üdvözöljük!</h1>
+<p>Ez egy <strong>HTML tartalmú</strong> e-mail.</p>
+<p>A generált kód: <a th:href="@{http://localhost:8080/verify_code(code=${generatedCode})}" th:text="${generatedCode}">Generált kód link</a></p>
+</body>
+
+</html>

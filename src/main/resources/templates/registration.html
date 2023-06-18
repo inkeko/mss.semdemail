@@ -1,0 +1,101 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>MSS</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+            crossorigin="anonymous"></script>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <title>Registration</title>
+</head>
+<body>
+<div>
+    <img src="/css/registration_1920x600.jpg" class="img-fluid" alt="Regisztráció">
+</div>
+<form th:action="@{/register/client}" method="post" class="row g-3 needs-validation registration-form-frame"
+      th:object="${client}">
+    <div class="header-1-view">
+        <h1>New Patient Registration</h1>
+    </div>
+    <div class="col-md-4">
+        <label for="firstName" class="form-label">First name</label>
+        <input type="text" class="form-control" id="firstName" th:field="*{firstName}"
+               placeholder="Gábor" required>
+        <span class="validatorError" th:text="${firstNameError} == null ? '' : ${firstNameError}"></span>
+    </div>
+    <div class="col-md-4">
+        <label for="lastName" class="form-label">Last name</label>
+        <input type="text" class="form-control" id="lastName" th:field="*{lastName}"
+               placeholder="Kovács" required>
+        <span class="validatorError" th:text="${lastNameError} == null ? '' : ${lastNameError}"></span>
+    </div>
+    <div class="col-md-4">
+        <label for="emailAddress" class="form-label">Email address</label>
+        <div class="input-group has-validation">
+            <span class="input-group-text" id="inputGroupPrepend">@</span>
+            <input type="text" class="form-control" id="emailAddress" aria-describedby="inputGroupPrepend"
+                   th:field="*{email}" placeholder="gaborkovacs@gmail.com" required>
+        </div>
+        <span class="validatorError" th:text="${emailError} == null ? '' : ${emailError}"></span>
+    </div>
+    <div class="col-md-4">
+        <label for="password" class="form-label">Password</label>
+        <input type="password" class="form-control" id="password" th:field="*{password}"
+               placeholder="Minimum 6 characters, contain at least 2 numbers and 2 letters" required>
+        <span class="validatorError" th:text="${passwordError} == null ? '' : ${passwordError}"></span>
+    </div>
+
+    <div class="col-md-4">
+        <label for="gender" class="form-label">Gender</label>
+        <select class="form-select" th:field="*{gender}" id="gender" required>
+            <option th:each="g : ${genderList}" th:value="${g.id}" th:text="${g.gender}">Male</option>
+        </select>
+    </div>
+
+
+    <div class="col-md-4">
+        <label for="placeOfBirth" class="form-label">Place of Birth</label>
+        <input type="text" class="form-control" id="placeOfBirth" th:field="*{placeOfBirth}"
+               placeholder="Budapest" required>
+        <span class="validatorError" th:text="${birthplaceError} == null ? '' : ${birthplaceError}"></span>
+    </div>
+    <div class="col-md-4">
+        <label for="dateOfBirth" class="form-label">Date of Birth</label>
+        <input type="date" class="form-control" id="dateOfBirth" th:field="*{dateOfBirth}" required>
+        <span class="validatorError" th:text="${dateOfBirthError} == null ? '' : ${dateOfBirthError}"></span>
+    </div>
+    <div class="col-md-4">
+        <label for="mothersName" class="form-label">Mother's Name</label>
+        <input type="text" class="form-control" id="mothersName" th:field="*{mothersName}"
+               placeholder="Kovács Erzsébet" required>
+        <span class="validatorError" th:text="${motherNameError} == null ? '' : ${motherNameError}"></span>
+    </div>
+    <div class="col-md-4">
+        <label for="TAJNumber" class="form-label">TAJ number</label>
+        <input type="text" class="form-control" id="TAJNumber" th:field="*{TAJNumber}"
+               placeholder="123-456-789" required>
+        <span class="validatorError" th:text="${tajError} == null ? '' : ${tajError}"></span>
+    </div>
+    <div class="col-md-4">
+        <label for="phoneNumber" class="form-label">Phone number</label>
+        <input type="text" class="form-control" id="phoneNumber" th:field="*{phoneNumber}"
+               placeholder="06 301 123456" required>
+        <span class="validatorError" th:text="${phoneError} == null ? '' : ${phoneError}"></span>
+    </div>
+    <div class="col-12">
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
+            <label class="form-check-label" for="invalidCheck">
+                Agree to terms and conditions
+            </label>
+        </div>
+    </div>
+    <div class="col-12">
+        <button class="btn btn-primary" type="submit">Register</button>
+    </div>
+</form>
+</body>
+</html>
