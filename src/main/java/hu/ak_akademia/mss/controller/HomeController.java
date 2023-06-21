@@ -78,6 +78,7 @@ public class HomeController {
                     model.addAttribute("message", "Regisztrációs kód helyes!");
                     model.addAttribute("user_first_name", user.getFirstName());
                     model.addAttribute("user_last_name", user.getLastName());
+                    model.addAttribute("loginUrl","/login");
                     return "registration_verification";
                 }
             } else {
