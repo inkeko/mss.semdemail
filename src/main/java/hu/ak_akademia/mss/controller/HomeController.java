@@ -53,10 +53,11 @@ public class HomeController {
 
     @GetMapping("/login")
     public String login(Model model, String error) {
-        if (error != null) {
-            model.addAttribute("errorMsg", "Incorrect username or password!");
+       if (error != null) {
+            model.addAttribute("errorMsg", "Incorrect username or password1!");
+
         }
-        return "/login";
+        return "login";
     }
 
     @PostMapping("/logout")

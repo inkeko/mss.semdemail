@@ -36,6 +36,7 @@ public class FinancialColleagueController {
         Map<String, String> errorList = registrationService.testMSSUserData(financialColleague);
         if (errorList.isEmpty()) {
             financialColleague.setRoles("ROLE_FINANCIALCOLLEAGUE");
+            registrationService.encryptPassword(financialColleague);
             registrationService.save(financialColleague);
             return registrationVerificationService.performRegistrationVerification(financialColleague, model);
 

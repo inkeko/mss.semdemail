@@ -37,6 +37,7 @@ public class DoctorController {
         Map<String, String> errorList = registrationService.testMSSUserData(doctor);
         if (errorList.isEmpty()) {
             doctor.setRoles("ROLE_DOCTOR");
+            registrationService.encryptPassword(doctor);
             registrationService.save(doctor);
             return registrationVerificationService.performRegistrationVerification(doctor, model);
 

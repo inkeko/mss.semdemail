@@ -42,7 +42,7 @@ public class RegistrationService {
     }
 
     public void save(MssUser mssUsers) {
-        encryptPassword(mssUsers);
+
         mssUserRepository.save(mssUsers);
     }
 
@@ -106,7 +106,7 @@ public class RegistrationService {
         return mssUserRepository.isEmailExist(email).isPresent();
     }
 
-    private void encryptPassword(MssUser mssUsers) {
+    public void encryptPassword(MssUser mssUsers) {
         mssUsers.setPassword(new PasswordEncryption(mssUsers.getPassword()).encryptWithMD5());
     }
 
