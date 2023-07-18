@@ -1,9 +1,9 @@
 package hu.ak_akademia.mss.controller;
 
-import hu.ak_akademia.mss.model.RegistrationVerificationCode;
+import hu.ak_akademia.mss.model.AreaOfExpertise;
 import hu.ak_akademia.mss.model.user.MssUser;
-
 import hu.ak_akademia.mss.repository.RegistrationVerificationRepository;
+import hu.ak_akademia.mss.service.AreaOfExpertiseService;
 import hu.ak_akademia.mss.service.MssUserDetailService;
 import hu.ak_akademia.mss.service.RegistrationService;
 import hu.ak_akademia.mss.service.RegistrationVerificationCodeService;
@@ -13,11 +13,17 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
 
 @Controller
 @RequestMapping("/")
 public class HomeController {
     private RegistrationService registrationService;
+    private AreaOfExpertiseService areaOfExpertiseService;
+
     @Autowired
     private RegistrationVerificationCodeService registrationVerificationCodeService;
     @Autowired
@@ -25,10 +31,14 @@ public class HomeController {
     @Autowired
     private RegistrationVerificationRepository registrationVerificationRepository;
 
+    public HomeController() {
+    }
+
     @Autowired
-    public void setRegistrationService(RegistrationService registrationService, RegistrationVerificationCodeService registrationVerificationCodeService) {
+    public void setRegistrationService(RegistrationService registrationService, RegistrationVerificationCodeService registrationVerificationCodeService, AreaOfExpertiseService areaOfExpertiseService) {
         this.registrationService = registrationService;
         this.registrationVerificationCodeService = registrationVerificationCodeService;
+        this.areaOfExpertiseService = areaOfExpertiseService;
     }
 
     @GetMapping
@@ -40,6 +50,16 @@ public class HomeController {
     public String home(Model model, Principal principal) {
         var currentUser = registrationService.getLoggedInUser(principal.getName());
         model.addAttribute("currentUser", currentUser.getFirstName() + " " + currentUser.getLastName());
+        List<AreaOfExpertise> areaOfExpertise = areaOfExpertiseService.getAllAreaOfexpertise();
+        Collections.sort(areaOfExpertise, Comparator.comparing(AreaOfExpertise::getQualification));
+        model.addAttribute("areaOfexpertise", areaOfExpertise);
+
+        for (AreaOfExpertise qualifications : areaOfExpertise) {
+            List<MssUser> doktors = mssUserDetailService.getDoctorOfSpetc(qualifications.getQualification());
+            model.addAttribute("doktors_" + qualifications.getId(), doktors);
+        }
+
+
         return "home";
     }
 
@@ -53,7 +73,7 @@ public class HomeController {
 
     @GetMapping("/login")
     public String login(Model model, String error) {
-       if (error != null) {
+        if (error != null) {
             model.addAttribute("errorMsg", "Incorrect username or password1!");
 
         }
@@ -79,7 +99,7 @@ public class HomeController {
                     model.addAttribute("message", "Regisztrációs kód helyes!");
                     model.addAttribute("user_first_name", user.getFirstName());
                     model.addAttribute("user_last_name", user.getLastName());
-                    model.addAttribute("loginUrl","/login");
+                    model.addAttribute("loginUrl", "/login");
                     return "registration_verification";
                 }
             } else {

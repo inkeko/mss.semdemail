@@ -2,6 +2,7 @@ package hu.ak_akademia.mss.config;
 
 import hu.ak_akademia.mss.service.MssUserDetailService;
 import hu.ak_akademia.mss.service.PasswordEncryption;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -12,6 +13,7 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration {
+
 
     private final MssUserDetailService mssUserDetailService;
 

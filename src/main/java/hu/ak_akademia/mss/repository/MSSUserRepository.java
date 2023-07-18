@@ -1,5 +1,6 @@
 package hu.ak_akademia.mss.repository;
 
+import hu.ak_akademia.mss.model.AreaOfExpertise;
 import hu.ak_akademia.mss.model.user.MssUser;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -22,6 +23,9 @@ public interface MSSUserRepository extends JpaRepository<MssUser, Integer> {
 
     @Query(nativeQuery = true, value = "SELECT * FROM mss_user WHERE email = ?1")
     Optional<? extends MssUser> isEmailExist(String email);
+
+
+    List<MssUser> findByAreaOfExpertise(AreaOfExpertise areaOfExpertise);
 
 
 }

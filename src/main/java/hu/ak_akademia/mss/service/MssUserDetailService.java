@@ -1,17 +1,24 @@
 package hu.ak_akademia.mss.service;
 
+import hu.ak_akademia.mss.model.AreaOfExpertise;
 import hu.ak_akademia.mss.model.user.MssSecurityUser;
 import hu.ak_akademia.mss.model.user.MssUser;
+import hu.ak_akademia.mss.repository.AreaOfExpertiseRepository;
 import hu.ak_akademia.mss.repository.MSSUserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
+import static org.apache.coyote.http11.Constants.a;
+
 @Service
 public class MssUserDetailService implements UserDetailsService {
 
     public MSSUserRepository mssUserRepository;
+
 
     public MssUserDetailService(MSSUserRepository mssUserRepository) {
         this.mssUserRepository = mssUserRepository;
@@ -30,4 +37,9 @@ public class MssUserDetailService implements UserDetailsService {
         user.setActive(isActive);
         mssUserRepository.save(user);
     }
-}
+    public List<MssUser> getDoctorOfSpetc(String qualification) {
+        AreaOfExpertise areaOfExpertise = new AreaOfExpertise();
+        areaOfExpertise.setQualification(qualification);
+        return mssUserRepository.findByAreaOfExpertise(areaOfExpertise);
+    }
+ }

@@ -8,47 +8,47 @@ import java.util.Objects;
 import java.util.StringJoiner;
 
 @Entity
-public class AreaOfExpertise {
+    public class AreaOfExpertise {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "area_of_expertise_id")
-    private int id;
+        @Id
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
+        @Column(name = "area_of_expertise_id")
+        private int id;
 
-    private String qualification;
+        private String qualification;
 
-    @ManyToMany(mappedBy = "areaOfExpertise")
-    private List<MssUser> users;
+        @ManyToMany(mappedBy = "areaOfExpertise")
+        private List<MssUser> users;
 
-    public AreaOfExpertise() {
+        public AreaOfExpertise() {
 
-    }
+        }
 
-    public AreaOfExpertise(int id, String qualification, List<MssUser> users) {
-        this.id = id;
-        this.qualification = qualification;
-        this.users = users;
-    }
+        public AreaOfExpertise(int id, String qualification, List<MssUser> users) {
+            this.id = id;
+            this.qualification = qualification;
+            this.users = users;
+        }
 
-    public int getId() {
-        return id;
-    }
+        public int getId() {
+            return id;
+        }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+        public void setId(int id) {
+            this.id = id;
+        }
 
-    public String getQualification() {
-        return qualification;
-    }
+        public String getQualification() {
+            return qualification;
+        }
 
-    public void setQualification(String qualification) {
-        this.qualification = qualification;
-    }
+        public void setQualification(String qualification) {
+            this.qualification = qualification;
+        }
 
-    public List<MssUser> getUsers() {
-        return users;
-    }
+        public List<MssUser> getUsers() {
+            return users;
+        }
 
     public void setUsers(List<MssUser> users) {
         this.users = users;

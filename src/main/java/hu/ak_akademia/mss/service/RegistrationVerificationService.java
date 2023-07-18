@@ -1,9 +1,6 @@
 package hu.ak_akademia.mss.service;
 
-import hu.ak_akademia.mss.model.user.Client;
 import hu.ak_akademia.mss.model.user.MssUser;
-import org.jetbrains.annotations.NotNull;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
@@ -14,8 +11,7 @@ public class RegistrationVerificationService<T extends MssUser> {
 
     private EmailService emailService;
 
-    @Autowired
-    public void setEmailService(EmailService emailService) {
+    public RegistrationVerificationService(EmailService emailService) {
         this.emailService = emailService;
     }
 

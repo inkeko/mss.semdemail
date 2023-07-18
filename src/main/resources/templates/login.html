@@ -15,9 +15,9 @@
     <div class="center-screen">
         <form name="f" th:action="@{/login}" action="/login" method="post">
             <h4 class="validatorError" th:text="${errorMsg} == null ? '': ${errorMsg}"></h4>
-            <h3 class="validatorError" th:text="${msg} == null ? '': ${errorMsg}"></h3>
+            <h3 class="validatorError" th:text="${msg} == null ?'' : ${msg}"></h3>
             <div class="mb-3">
-                3 <label for="exampleInputEmail1" class="form-label">Email address</label>
+                 <label for="exampleInputEmail1" class="form-label">Email address</label>
                 <input name="username" type="text" class="form-control" id="exampleInputEmail1"
                        aria-describedby="emailHelp">
                 <div id="emailHelp" class="form-text">Enter your e-mail address!</div>
