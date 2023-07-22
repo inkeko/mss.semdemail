@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="hu" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
@@ -6,28 +6,31 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <!-- Bootstrap CSS hivatkozás -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Saját CSS fájl (style-home.css) -->
     <link rel="stylesheet" th:href="@{/css/style-home.css}">
 </head>
 <body>
 <div class="header">
-    <span th:text="${currentUser} == null ? '' : ${currentUser}">Hello Mister!</span>
+    <span th:text="${currentUser == null ? '' : currentUser}">Hello Mister!</span>
     <form th:action="@{/logout}" method="post">
         <input type="submit" th:value="logout" value="Logout" class="btn btn-primary">
     </form>
 </div>
-
 <div class="container">
     <div class="row">
-        <div class="col-lg-4" th:each="areaOfexpertise : ${areaOfexpertise}" th:if="${(status.count - 1) % 3 == 0}">
+        <div class="col-lg-4" th:each="expertise : ${areaOfexpertiseList}">
             <div class="row">
-                <div class="col-lg-4" th:each="i : ${#numbers.sequence(0,2)}" th:if="${areaOfexpertise[status.index + i]}">
+                <div class="col-lg-12">
+                    <h3 th:text="${expertise.qualification}"></h3>
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title" th:text="${areaOfexpertise[status.index + i].qualification}"></h5>
-                            <!-- Orvosok combo box -->
-                            <select class="form-select">
-                                <option selected disabled>Orvos kiválasztása</option>
-                                <option th:each="dotors : ${'doktors_' + areaOfexpertise[status.index + i].id}" th:text="${doctors.nev}"></option>
+                            <h5 class="card-title">Orvosok:</h5>
+                            <p th:unless="${not #lists.isEmpty(expertise.users)}">Nincs hozzárendelt orvos.</p>
+                            <ul th:if="${not #lists.isEmpty(expertise.users)}">
+                                <li th:each="doctor : ${expertise.users}" th:text="${doctor.firstName + ' ' + doctor.lastName}"></li>
+                            </ul>
                         </div>
                     </div>
                 </div>
@@ -36,6 +39,7 @@
     </div>
 </div>
 
+
+
 </body>
 </html>
-

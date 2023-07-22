@@ -25,7 +25,9 @@ public interface MSSUserRepository extends JpaRepository<MssUser, Integer> {
     Optional<? extends MssUser> isEmailExist(String email);
 
 
-    List<MssUser> findByAreaOfExpertise(AreaOfExpertise areaOfExpertise);
+    @Query(nativeQuery = true, value = "SELECT * FROM mss_user_area_of_expertise WHERE area_of_expertise_id = ?1")
+    List<MssUser> findUsersByAreaOfExpertiseId(int areaOfExpertiseId);
 
+    List<MssUser> findByAreaOfExpertise(AreaOfExpertise areaOfExpertise);
 
 }

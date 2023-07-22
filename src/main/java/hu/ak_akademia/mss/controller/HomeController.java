@@ -1,6 +1,7 @@
 package hu.ak_akademia.mss.controller;
 
 import hu.ak_akademia.mss.model.AreaOfExpertise;
+import hu.ak_akademia.mss.model.user.Doctor;
 import hu.ak_akademia.mss.model.user.MssUser;
 import hu.ak_akademia.mss.repository.RegistrationVerificationRepository;
 import hu.ak_akademia.mss.service.AreaOfExpertiseService;
@@ -8,9 +9,11 @@ import hu.ak_akademia.mss.service.MssUserDetailService;
 import hu.ak_akademia.mss.service.RegistrationService;
 import hu.ak_akademia.mss.service.RegistrationVerificationCodeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.expression.spel.SpelEvaluationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.thymeleaf.exceptions.TemplateInputException;
 
 import java.security.Principal;
 import java.util.Collections;
@@ -23,24 +26,19 @@ import java.util.List;
 public class HomeController {
     private RegistrationService registrationService;
     private AreaOfExpertiseService areaOfExpertiseService;
+    private MssUserDetailService mssUserDetailService;
 
     @Autowired
     private RegistrationVerificationCodeService registrationVerificationCodeService;
-    @Autowired
-    private MssUserDetailService mssUserDetailService;
-    @Autowired
-    private RegistrationVerificationRepository registrationVerificationRepository;
-
     public HomeController() {
     }
 
     @Autowired
-    public void setRegistrationService(RegistrationService registrationService, RegistrationVerificationCodeService registrationVerificationCodeService, AreaOfExpertiseService areaOfExpertiseService) {
+    public HomeController(RegistrationService registrationService, AreaOfExpertiseService areaOfExpertiseService, MssUserDetailService mssUserDetailService) {
         this.registrationService = registrationService;
-        this.registrationVerificationCodeService = registrationVerificationCodeService;
         this.areaOfExpertiseService = areaOfExpertiseService;
+        this.mssUserDetailService = mssUserDetailService;
     }
-
     @GetMapping
     public String index() {
         return "/index";
@@ -50,19 +48,16 @@ public class HomeController {
     public String home(Model model, Principal principal) {
         var currentUser = registrationService.getLoggedInUser(principal.getName());
         model.addAttribute("currentUser", currentUser.getFirstName() + " " + currentUser.getLastName());
+
+
         List<AreaOfExpertise> areaOfExpertise = areaOfExpertiseService.getAllAreaOfexpertise();
         Collections.sort(areaOfExpertise, Comparator.comparing(AreaOfExpertise::getQualification));
-        model.addAttribute("areaOfexpertise", areaOfExpertise);
+        model.addAttribute("areaOfexpertiseList", areaOfExpertise);
 
-        for (AreaOfExpertise qualifications : areaOfExpertise) {
-            List<MssUser> doktors = mssUserDetailService.getDoctorOfSpetc(qualifications.getQualification());
-            model.addAttribute("doktors_" + qualifications.getId(), doktors);
-        }
 
 
         return "home";
     }
-
     @ExceptionHandler(value = RuntimeException.class)
     public String error(RuntimeException e, Model model) {
         model.addAttribute("exception", e.getMessage());

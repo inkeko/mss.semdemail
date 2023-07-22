@@ -18,10 +18,11 @@ import static org.apache.coyote.http11.Constants.a;
 public class MssUserDetailService implements UserDetailsService {
 
     public MSSUserRepository mssUserRepository;
+    private AreaOfExpertiseService areaOfExpertiseService;
 
-
-    public MssUserDetailService(MSSUserRepository mssUserRepository) {
+    public MssUserDetailService(MSSUserRepository mssUserRepository, AreaOfExpertiseService areaOfExpertiseService) {
         this.mssUserRepository = mssUserRepository;
+        this.areaOfExpertiseService = areaOfExpertiseService;
     }
 
     @Override
@@ -38,8 +39,9 @@ public class MssUserDetailService implements UserDetailsService {
         mssUserRepository.save(user);
     }
     public List<MssUser> getDoctorOfSpetc(String qualification) {
-        AreaOfExpertise areaOfExpertise = new AreaOfExpertise();
-        areaOfExpertise.setQualification(qualification);
+        AreaOfExpertise areaOfExpertise = areaOfExpertiseService.getAreaOfExpertiseByQualification(qualification);
         return mssUserRepository.findByAreaOfExpertise(areaOfExpertise);
     }
- }
+
+
+}
