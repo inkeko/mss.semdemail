@@ -31,6 +31,12 @@
                             <ul th:if="${not #lists.isEmpty(expertise.users)}">
                                 <li th:each="doctor : ${expertise.users}" th:text="${doctor.firstName + ' ' + doctor.lastName}"></li>
                             </ul>
+
+                            <div class="form-group" th:if="${not #lists.isEmpty(expertise.users)}">
+                                <label for="doctorsSelect">Válassz orvost:</label>
+                                <select class="form-control" id="doctorsSelect">
+                                    <option th:each="doctor : ${expertise.users}"  th:text="${doctor.firstName + ' ' + doctor.lastName}"></option>
+                                </select>
                         </div>
                     </div>
                 </div>
@@ -38,7 +44,7 @@
         </div>
     </div>
 </div>
-
+</div>
 
 
 </body>
