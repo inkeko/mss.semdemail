@@ -1,5 +1,6 @@
 package hu.ak_akademia.mss.controller;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import hu.ak_akademia.mss.model.AreaOfExpertise;
 import hu.ak_akademia.mss.model.user.Doctor;
 import hu.ak_akademia.mss.model.user.MssUser;
@@ -20,6 +21,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import static org.hibernate.tool.schema.SchemaToolingLogging.LOGGER;
+
 
 @Controller
 @RequestMapping("/")
@@ -27,7 +30,7 @@ public class HomeController {
     private RegistrationService registrationService;
     private AreaOfExpertiseService areaOfExpertiseService;
     private MssUserDetailService mssUserDetailService;
-
+    private static final Logger LOGGER = LoggerFactory.getLogger(HomeController.class);
     @Autowired
     private RegistrationVerificationCodeService registrationVerificationCodeService;
     public HomeController() {
@@ -53,11 +56,21 @@ public class HomeController {
         List<AreaOfExpertise> areaOfExpertise = areaOfExpertiseService.getAllAreaOfexpertise();
         Collections.sort(areaOfExpertise, Comparator.comparing(AreaOfExpertise::getQualification));
         model.addAttribute("areaOfexpertiseList", areaOfExpertise);
+        LOGGER.info("areaOfexpertiseList: {}", areaOfExpertise);
 
 
 
         return "home";
     }
+    @PostMapping("/selectedDoctor")
+    public String selectedDoctor(@RequestParam("selectedDoctorId") int selectedDoctorId) {
+        // Itt végezd el a szükséges műveleteket a választott orvos azonosítójával
+        // ...
+        return "redirect:/home"; // Vagy a megfelelő URL-re irányítás
+    }
+
+
+
     @ExceptionHandler(value = RuntimeException.class)
     public String error(RuntimeException e, Model model) {
         model.addAttribute("exception", e.getMessage());

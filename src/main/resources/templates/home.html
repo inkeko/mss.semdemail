@@ -26,19 +26,19 @@
                     <h3 th:text="${expertise.qualification}"></h3>
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title">Orvosok:</h5>
-                            <p th:unless="${not #lists.isEmpty(expertise.users)}">Nincs hozzárendelt orvos.</p>
-                            <ul th:if="${not #lists.isEmpty(expertise.users)}">
-                                <li th:each="doctor : ${expertise.users}" th:text="${doctor.firstName + ' ' + doctor.lastName}"></li>
-                            </ul>
+                            <h5 class="card-title">Ide majd irunk valamit:</h5>
+                            <p th:unless="${not #lists.isEmpty(expertise.users)}">Még nincs hozzárendelt orvos.</p>
+
 
                             <div class="form-group" th:if="${not #lists.isEmpty(expertise.users)}">
                                 <label for="doctorsSelect">Válassz orvost:</label>
-                                <select class="form-control" id="doctorsSelect">
-                                    <option th:each="doctor : ${expertise.users}"  th:text="${doctor.firstName + ' ' + doctor.lastName}"></option>
+                                <select class="form-control" id="doctorsSelect" name="selectedDoctorId">
+                                    <option value="" selected>Mind kiválasztva</option>
+                                    <option th:each="doctor : ${expertise.users}" th:value="${doctor.userId}" th:text="${doctor.firstName + ' ' + doctor.lastName}"></option>
                                 </select>
+                            </div>
+
                         </div>
-                    </div>
                 </div>
             </div>
         </div>
